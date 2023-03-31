@@ -29,12 +29,12 @@ public class CepService {
 
         EnderecoResponseViaCep respostaViaCep = restTemplate.getForObject(urlViaCep, EnderecoResponseViaCep.class);
 
-        validaCepRetornouErro(respostaViaCep);
+        validaCepExiste(respostaViaCep);
 
-        return enderecoMapper.viaCepToCorrectJson(respostaViaCep);
+        return enderecoMapper.corrigeAtributosDaResposta(respostaViaCep);
     }
 
-    private void validaCepRetornouErro(EnderecoResponseViaCep enderecoResponseViaCep){
+    private void validaCepExiste(EnderecoResponseViaCep enderecoResponseViaCep){
         if(enderecoResponseViaCep.getCep() == null){
             throw new CepInvalidoException("O CEP informado não existe.");
         }
