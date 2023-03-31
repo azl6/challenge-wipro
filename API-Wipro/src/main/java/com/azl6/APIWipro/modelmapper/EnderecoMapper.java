@@ -14,7 +14,7 @@ public class EnderecoMapper {
     @Autowired
     ModelMapper modelMapper;
 
-    public EnderecoResponse corrigeAtributosDaResposta(EnderecoResponseViaCep enderecoResponseViaCep){
+    public EnderecoResponse corrigeNomesDosAtributosEInsereFrete(EnderecoResponseViaCep enderecoResponseViaCep){
 
         TypeMap<EnderecoResponseViaCep, EnderecoResponse> typeMap = modelMapper.getTypeMap(EnderecoResponseViaCep.class, EnderecoResponse.class);
 

@@ -31,7 +31,7 @@ public class CepService {
 
         validaCepExiste(respostaViaCep);
 
-        return enderecoMapper.corrigeAtributosDaResposta(respostaViaCep);
+        return enderecoMapper.corrigeNomesDosAtributosEInsereFrete(respostaViaCep);
     }
 
     private void validaCepExiste(EnderecoResponseViaCep enderecoResponseViaCep){

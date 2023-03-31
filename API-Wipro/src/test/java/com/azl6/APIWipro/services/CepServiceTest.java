@@ -78,7 +78,7 @@ public class CepServiceTest {
     @Test
     public void testConsultaEnderecoAPartirDoCep_DeveRetornarEndereçoValido_QuandoCepEhValido(){
         BDDMockito.given(restTemplate.getForObject(BASE_URL_VIA_CEP + "/01001000/json", EnderecoResponseViaCep.class)).willReturn(enredecoResponseViaCepValido);
-        BDDMockito.given(enderecoMapper.corrigeAtributosDaResposta(enredecoResponseViaCepValido)).willReturn(enredecoResponseValido);
+        BDDMockito.given(enderecoMapper.corrigeNomesDosAtributosEInsereFrete(enredecoResponseViaCepValido)).willReturn(enredecoResponseValido);
 
         EnderecoResponse response = cepService.consultaEnderecoAPartirDoCep("01001000");
 
@@ -90,7 +90,7 @@ public class CepServiceTest {
         assertEquals("Praça da Sé", response.getRua());
 
         BDDMockito.then(restTemplate).should(times(1)).getForObject(BASE_URL_VIA_CEP + "/01001000/json", EnderecoResponseViaCep.class);
-        BDDMockito.then(enderecoMapper).should(times(1)).corrigeAtributosDaResposta(enredecoResponseViaCepValido);
+        BDDMockito.then(enderecoMapper).should(times(1)).corrigeNomesDosAtributosEInsereFrete(enredecoResponseViaCepValido);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class CepServiceTest {
         
 
         BDDMockito.then(restTemplate).should(times(1)).getForObject(BASE_URL_VIA_CEP + "/11111111/json", EnderecoResponseViaCep.class);
-        BDDMockito.then(enderecoMapper).should(times(0)).corrigeAtributosDaResposta(enredecoResponseViaCepValido);
+        BDDMockito.then(enderecoMapper).should(times(0)).corrigeNomesDosAtributosEInsereFrete(enredecoResponseViaCepValido);
     }
     
 }

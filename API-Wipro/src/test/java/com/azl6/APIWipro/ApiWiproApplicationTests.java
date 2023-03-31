@@ -10,4 +10,9 @@ class ApiWiproApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	public void applicationContextTest() {
+		ApiWiproApplication.main(new String[] {});
+	}
+
 }
