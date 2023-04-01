@@ -1,4 +1,4 @@
-package com.azl6.modelmapper;
+package com.azl6.APIWipro.modelmapper;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -10,7 +10,6 @@ import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 
-import com.azl6.APIWipro.modelmapper.EnderecoMapper;
 import com.azl6.APIWipro.models.EnderecoResponse;
 import com.azl6.APIWipro.models.EnderecoResponseViaCep;
 

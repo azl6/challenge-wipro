@@ -59,5 +59,28 @@ public class EnderecoControllerTest {
         .andExpect(jsonPath("$.frete").value(7.85))
         .andReturn();
     }
+
+    @Test
+    public void testConsultaEnderecoAPartirDoCep_DeveRetornar400_QuandoCepEhVazio() throws Exception {
+    
+        BDDMockito.given(cepService.consultaEnderecoAPartirDoCep("11111111")).willReturn(enderecoResponseValido);
+    
+        mvc.perform(post("/v1/consulta-endereco")
+        .contentType(MediaType.APPLICATION_JSON)
+        .content("{\"numeroCep\": \"\"}"))
+        .andExpect(status().isBadRequest())
+        .andReturn();
+    }
+
+    @Test
+    public void testConsultaEnderecoAPartirDoCep_DeveRetornar400_QuandoCepEhNulo() throws Exception {
+    
+        BDDMockito.given(cepService.consultaEnderecoAPartirDoCep("11111111")).willReturn(enderecoResponseValido);
+    
+        mvc.perform(post("/v1/consulta-endereco")
+        .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(status().isBadRequest())
+        .andReturn();
+    }
     
 }
