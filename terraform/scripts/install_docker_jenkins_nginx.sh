@@ -8,13 +8,23 @@ sudo service docker start
 
 sudo chmod a+rwx /var/run/docker.sock
 
-echo '**********SUBUNDO CONTEINER DO JENKINS**********'
+echo '**********SUBINDO CONTEINER DO JENKINS**********'
 
 mkdir /tmp/jenkins_home
 
-docker run --name jenkins -v /tmp/jenkins_home:/var/jenkins_home -d -p 8080:8080 jenkins/jenkins 
+docker run --name jenkins -v /tmp/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -d -p 8080:8080 jenkins/jenkins 
 
-docker exec -it -u 0 jenkins bash -c "apt update && apt install -y maven"
+sleep 5
+
+echo '**********INSTALANDO DOCKER NO JENKINS**********'
+
+docker exec -u 0 jenkins bash -c "curl https://get.docker.com/ > dockerinstall && chmod 777 dockerinstall && ./dockerinstall"
+
+docker exec -u 0 jenkins bash -c "mkdir -p /home/jenkins/bin/ && chown -R 1000:1000 /home/jenkins"
+
+echo '**********INSTALANDO MAVEN NO JENKINS**********'
+
+docker exec -u 0 jenkins bash -c "apt update && apt install -y maven"
 
 cat /tmp/jenkins_home/secrets/initialAdminPassword >> /tmp/JENKINS_PASSWORD
 
