@@ -75,6 +75,46 @@ Feature: Integration tests
 
 A implementação dos cenários se encontra no arquivo **CepSteps.java**
 
+# Problema do frete
+
+Resolvi o problema do frete com um Map, onde a **chave** era o valor do frete e o **valor** era uma lista de estados que correspondem ao valor em questão.
+
+```java
+  private static Map<Double, List<String>> valoresFretePorEstado = new HashMap<>() {{
+      put(7.85, List.of("ES", "MG", "RJ", "SP"));
+      put(12.50, List.of("GO", "MT", "MS", "DF"));
+      put(15.98, List.of("MA", "PI", "CE", "RN", "RN", "PB", "AL", "SE", "BA"));
+      put(17.30, List.of("PR", "RS", "SC"));
+      put(20.83, List.of("AC", "AP", "AM", "PA", "RO", "RR", "TO")); 
+  }}; 
+```
+
+Depois, fiz um **Converter** no ModelMapper, que tem a responsabilidade de receber a sigla de um estado e convertê-la a seu frete:
+
+```java
+protected Double convert(String estado) {
+
+    Double frete = 0d;
+
+    for (Map.Entry<Double, List<String>> entry : valoresFretePorEstado.entrySet()) {
+        if(entry.getValue().contains(estado)){
+            frete = entry.getKey();
+            break;
+        }
+    }
+
+    return frete;
+}
+```
+
+Por fim, bastou adicionar o **Converter** nas regras de conversão do ModelMapper:
+
+**Lê-se:** Usando o `FreteConverter.converter()`, extraia o valor do campo **uf** e retorne-me o frete correspondente a ela.
+
+```java
+typeMap.addMappings(mapper -> mapper.using(FreteConverter.converter()).map(EnderecoResponseViaCep::getUf, EnderecoResponse::setFrete));
+```
+
 # Deploy da infraestrutura
 
 Dentro da pasta **terraform**, encontram-se arquivos usados para o deploy da infraestrutura do projeto.
