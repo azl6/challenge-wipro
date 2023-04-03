@@ -6,7 +6,7 @@ resource "aws_security_group" "SG_Backend" {
     from_port   = 0
     to_port     = 0
     protocol    = "all"
-    cidr_blocks = ["${aws_instance.NginxJenkinsServer.public_ip}/32", "186.216.72.206/32" ]
+    cidr_blocks = ["${aws_instance.NginxServer.public_ip}/32", "${aws_instance.JenkinsServer.public_ip}/32", "186.216.72.206/32"]
   }
 
   egress {

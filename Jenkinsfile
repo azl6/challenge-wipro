@@ -39,7 +39,7 @@ pipeline {
                 sh """
                     echo 'Pushing...'
                     docker login -u="$DOCKER_USR" -p="$DOCKER_PASSWD"
-                    docker push -t azold6/wipro-backend:$BUILD_NUMBER . 
+                    docker push azold6/wipro-backend:$BUILD_NUMBER . 
                 """ 
             }
         }

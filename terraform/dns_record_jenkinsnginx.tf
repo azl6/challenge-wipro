@@ -3,5 +3,5 @@ resource "aws_route53_record" "DNS_Proxy" {
   name    = "proxy.wipro.alexthedeveloper.com.br"
   type    = "A"
   ttl     = 300
-  records = [aws_instance.NginxJenkinsServer.public_ip]
+  records = [aws_instance.NginxServer.public_ip]
 }

@@ -1,8 +1,8 @@
 resource "aws_instance" "BackendServer" {
-  ami           = "ami-00a16e018e54305c6"
-  instance_type = "t2.micro"
-  key_name      = aws_key_pair.WiproKeyPair.key_name
-  security_groups = [ aws_security_group.SG_Backend.name ]
+  ami             = "ami-00a16e018e54305c6"
+  instance_type   = "t2.micro"
+  key_name        = aws_key_pair.WiproKeyPair.key_name
+  security_groups = [aws_security_group.SG_Backend.name]
 
   tags = {
     "Name" = "Backend-Server"
