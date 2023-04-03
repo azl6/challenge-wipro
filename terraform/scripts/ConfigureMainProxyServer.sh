@@ -26,6 +26,10 @@ echo '**********INSTALANDO MAVEN NO JENKINS**********'
 
 docker exec -u 0 jenkins bash -c "apt update && apt install -y maven"
 
+echo '**********INSTALANDO VIM NO JENKINS**********'
+
+docker exec -u 0 jenkins bash -c "apt install -y vim"
+
 cat /tmp/jenkins_home/secrets/initialAdminPassword >> /tmp/JENKINS_PASSWORD
 
 echo '**********INSTALANDO NGINX**********'

@@ -1,3 +1,7 @@
-output "WiproServerIP" {
-  value = aws_instance.WiproServer.public_ip
+output "NginxJenkinsServerIP" {
+  value = aws_instance.NginxJenkinsServer.public_ip
+}
+
+output "BackendServerIP" {
+  value = aws_instance.BackendServer.public_ip
 }
