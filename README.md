@@ -266,7 +266,7 @@ Dentre os recursos, estão:
 - SSH key-pair para acessar os servidores via SSH;
 - Outras coisas menores, como outputs do Terraform, provider, etc...
 
-Por favor, **não deixe de acessar a pasta terraform**! Tem **muita** coisa lá dentro.
+Por favor, não deixe de acessar a pasta **terraform**!
 
 # CI/CD
 
