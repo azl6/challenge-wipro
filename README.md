@@ -142,6 +142,24 @@ typeMap.addMappings(mapper -> mapper.using(FreteConverter.converter()).map(Ender
 
 **Lê-se:** Usando o `FreteConverter.converter()`, extraia o valor do campo **uf** e retorne-me o frete correspondente a ela.
 
+# Problema de exigência de campos com nomes divergentes do retorno da API do ViaCep
+
+No enunciado da entrega, certos campos são nomeados divergentemente do retorno da API ViaCep:
+
+- **logradouro** >>>> **rua**
+- **localidade** >>>> **cidade**
+- **uf** >>>> **estado**
+
+Resolvi esse problema também pelo ModelMapper, que é capaz de mapear campos com nomes divergentes:
+
+```java
+typeMap.addMapping(EnderecoResponseViaCep::getLogradouro, EnderecoResponse::setRua);
+typeMap.addMapping(EnderecoResponseViaCep::getLocalidade, EnderecoResponse::setCidade);
+typeMap.addMapping(EnderecoResponseViaCep::getUf, EnderecoResponse::setEstado);
+```
+
+Não é um problema complexo, mas é um detalhe que pode passar despercebido.
+
 # Mensagens de erro personalizadas
 
 Um erro será retornado majoritariamente nos seguintes casos:
@@ -320,11 +338,11 @@ COPY . /app
 CMD java -jar target/API-Wipro-0.0.1-SNAPSHOT.jar
 ```
 
-# Shell Scripting
+# Configuration management
 
-Usei uma série de scripts para o configuration-management do projeto. Alternativamente pode-se utilizar o Ansible, mas para fins de simplificação, optei pelo shell-script mesmo.
+Usei uma série de shell-scripts para o configuration-management do projeto. Alternativamente pode-se utilizar o Ansible, mas para fins de simplificação, optei pelo shell-script mesmo.
 
 ![image](https://user-images.githubusercontent.com/80921933/229431433-6f66b7ae-5b6c-4f69-bd8d-d1d1b2c87c7d.png)
 
-Possuo um projeto com a configuração bem mais extensa, para subir um cluster Kubernetes via Shell-Script/Terraform em instâncias EC2 t2.micro com Weave-net instalado e com os joins já realizados nos nodes. Caso tenham interesse, segue o link: https://github.com/azl6/k8s-cluster-creation
+Nesse âmbito, possuo um projeto para subir um cluster K8s em instâncias EC2 com shell-script e Terraform. Está fora do escopo do teste técnico, mas gostaria de compartilhá-lo com vocês: https://github.com/azl6/k8s-cluster-creation
 
