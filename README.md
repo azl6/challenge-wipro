@@ -4,9 +4,11 @@
 
 - Java
 - Spring Boot
-- JUnit 5
+- jUnit 5
 - Cucumber/Gherkin
 - TestRestTemplate
+- Jacoco
+- Spring Validation
 - Maven
 - ModelMapper
 - NGINX
