@@ -16,8 +16,8 @@ public class OpenAPIConfig {
   @Bean
   public OpenAPI myOpenAPI() {
     Server localServer = new Server();
-    localServer.setUrl("http://localhost:80");
-    localServer.setDescription("Servidor local");
+    localServer.setUrl("http://backend.wipro.alexthedeveloper.com.br:80");
+    localServer.setDescription("Servidor API");
 
     Contact contact = new Contact();
     contact.setEmail("alex.rodrigues23997@gmail.com");
