@@ -399,6 +399,6 @@ Nesse âmbito, possuo um projeto para subir um cluster K8s em instâncias EC2 co
 
 - Fazer um frontend em React estava em meus planos, entretanto, tive alguns problemas pessoais, e o tempo que pude dedicar ao projeto não me permitiu fazê-lo;
 - Usar o ModelMapper foi somente **uma das inúmeras opções**. Talvez pareça que a sua utilização seja um pouco não-usual, mas eu gosto bastante da ferramenta. Caso fosse opção da liderança, nada me impediria de implementar essa solução de outra forma. Mas eu acho os Converters do ModelMapper extremamente poderosos e por isso optei por utilizá-los;
-- Por favor, notem os meus esforços com NGINX, Terraform, Shell Script, Linux, certificados SSL/TLS, Docker, etc... Sou um grande entusiasta da cultura DevOps e, apesar deste assunto estar fora do escopo do projeto, implementei diversas soluções aqui. Me capacitei para atuar em muitas frentes na área de TI, seja ela Backend, Frontend ou DevOps.
+- Por favor, notem os meus esforços com NGINX, Terraform, Shell Script, Linux, certificados SSL/TLS, Docker, etc... Sou um grande entusiasta da cultura DevOps e, apesar deste assunto estar fora do escopo do projeto, implementei diversas soluções aqui. Me capacitei para atuar nas mais diversas frentes da área de TI, seja Backend, Frontend ou DevOps.
 
 **Obrigado pela oportunidade!**
