@@ -344,7 +344,46 @@ CMD java -jar target/API-Wipro-0.0.1-SNAPSHOT.jar
 
 Usei uma série de shell-scripts para o configuration-management do projeto. Alternativamente pode-se utilizar o Ansible, mas para fins de simplificação, optei pelo shell-script mesmo.
 
+Os scripts estão em **/terraform/scripts**.
+
 ![image](https://user-images.githubusercontent.com/80921933/229431433-6f66b7ae-5b6c-4f69-bd8d-d1d1b2c87c7d.png)
 
-Nesse âmbito, possuo um projeto para subir um cluster K8s em instâncias EC2 com shell-script e Terraform. Está fora do escopo do teste técnico, mas gostaria de compartilhá-lo com vocês: https://github.com/azl6/k8s-cluster-creation
+Como exemplo, deixarei o script **InstallJenkins.sh** logo abaixo:
 
+```shell
+#!/bin/bash
+
+echo '**********INSTALANDO DOCKER**********'
+
+sudo amazon-linux-extras install -y docker
+
+sudo service docker start
+
+sudo chmod a+rwx /var/run/docker.sock
+
+echo '**********SUBINDO CONTEINER DO JENKINS**********'
+
+mkdir /tmp/jenkins_home
+
+docker run --name jenkins -v /tmp/jenkins_home:/var/jenkins_home -v /var/run/docker.sock:/var/run/docker.sock -d -p 8080:8080 jenkins/jenkins 
+
+sleep 5
+
+echo '**********INSTALANDO DOCKER NO JENKINS**********'
+
+docker exec -u 0 jenkins bash -c "curl https://get.docker.com/ > dockerinstall && chmod 777 dockerinstall && ./dockerinstall"
+
+docker exec -u 0 jenkins bash -c "mkdir -p /home/jenkins/bin/ && chown -R 1000:1000 /home/jenkins"
+
+echo '**********INSTALANDO MAVEN NO JENKINS**********'
+
+docker exec -u 0 jenkins bash -c "apt update && apt install -y maven"
+
+echo '**********INSTALANDO VIM NO JENKINS**********'
+
+docker exec -u 0 jenkins bash -c "apt install -y vim"
+
+cat /tmp/jenkins_home/secrets/initialAdminPassword >> /tmp/JENKINS_PASSWORD
+```
+
+Nesse âmbito, possuo um projeto para subir um cluster K8s em instâncias EC2 com shell-script e Terraform. Está fora do escopo do teste técnico, mas gostaria de compartilhá-lo com vocês: https://github.com/azl6/k8s-cluster-creation
