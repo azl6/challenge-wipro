@@ -192,6 +192,8 @@ Os testes também encarregaram-se de testar os cenários acima evidenciados.
 Além disso, faz-se importante evidenciar a utilização do **Regex** para a validação de formato do CEP:
 
 ```java
+@NotNull(message = "O campo numeroCep não pode ser nulo.")
+@NotBlank(message = "O campo numeroCep não pode ser vazio.")
 @Pattern(regexp = "^([0-9]{5}-[0-9]{3}|[0-9]{8})$", message = "O formato do CEP deve ser XXXXX-XXX ou XXXXXXXX.")
 private String numeroCep;
 ```
