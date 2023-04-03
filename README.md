@@ -49,7 +49,7 @@ Isso é devido a uma configuração necessária para acessar o Swagger via HTTPS
 
 # Enviando uma requisição para a API
 
-Experimente enviar um POST request com o seguinte Request Body para o endereço **proxy.wipro.alexthedeveloper.com.br/v1/consulta-endereco**:
+Experimente enviar um POST request com o seguinte Request Body para o endereço **https://proxy.wipro.alexthedeveloper.com.br/v1/consulta-endereco**:
 
 ```json
 {
@@ -237,7 +237,7 @@ server {
 
 ```
 
-Ao acessar o DNS **proxy.wipro.alexthedeveloper.com.br**, você perceberá que o browser confia no certificado emitido, já que ele é assinado por um root CA:
+Ao acessar o DNS **https://proxy.wipro.alexthedeveloper.com.br**, você perceberá que o browser confia no certificado emitido, já que ele é assinado por um root CA:
 
 ![image](https://user-images.githubusercontent.com/80921933/229428426-291262e3-e816-4b8e-b5c1-b799919f17ec.png)
 
