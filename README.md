@@ -57,6 +57,10 @@ Experimente enviar um POST request com o seguinte Request Body para o endereço 
 }
 ```
 
+Resultado:
+
+![image](https://user-images.githubusercontent.com/80921933/229579265-dca283f1-dfe5-490f-9dc5-1bff096c4fdf.png)
+
 O endereço acima possui um certificado SSL instalado. Existe também uma versão HTTP da API, hospedada em **backend.wipro.alexthedeveloper.com.br/v1/consulta-endereco**. Basta enviar o mesmo Request-Body para lá.
 
 # Testes 
