@@ -48,7 +48,7 @@ pipeline {
             steps {
                 sh """
                     ssh -o StrictHostKeyChecking=no ec2-user@backend.wipro.alexthedeveloper.com.br "docker stop wipro-backend"
-                    ssh -o StrictHostKeyChecking=no ec2-user@backend.wipro.alexthedeveloper.com.br "docker run -p 8181:8181 -d --name wipro-backend --rm azold6/wipro-backend:$BUILD_NUMBER"
+                    ssh -o StrictHostKeyChecking=no ec2-user@backend.wipro.alexthedeveloper.com.br "docker run -p 80:80 -d --name wipro-backend --rm azold6/wipro-backend:$BUILD_NUMBER"
                 """                
             }
         }
