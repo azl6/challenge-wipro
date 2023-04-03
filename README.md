@@ -1,10 +1,18 @@
-![wiprologo](https://user-images.githubusercontent.com/80921933/229383449-ad50d599-8ac8-4ebc-a446-edebe81e1f00.jpeg)
+![venture-thumbnail-1175x312](https://user-images.githubusercontent.com/80921933/229437775-d5d63121-55f4-4546-94b6-ed12ff6c251d.jpg)
+
+# Teste técnico - Wipro
+
+>Status: Concluído ✔️
+
 
 # Tecnologias usadas:
 
 - Java
 - Spring Boot
 - jUnit 5
+- Mockito
+- MockMvc
+- Assertions, Hamcrest
 - Cucumber/Gherkin
 - TestRestTemplate
 - Jacoco
@@ -391,5 +399,6 @@ Nesse âmbito, possuo um projeto para subir um cluster K8s em instâncias EC2 co
 
 - Fazer um frontend em React estava em meus planos, entretanto, tive alguns problemas pessoais, e o tempo que pude dedicar ao projeto não me permitiu fazê-lo;
 - Usar o ModelMapper foi somente **uma das inúmeras opções**. Talvez pareça que a sua utilização seja um pouco não-usual, mas eu gosto bastante da ferramenta. Caso fosse opção da liderança, nada me impediria de implementar essa solução de outra forma. Mas eu acho os Converters do ModelMapper extremamente poderosos e por isso optei por utilizá-los;
+- Por favor, notem os meus esforços com NGINX, Terraform, Shell Script, Linux, certificados SSL/TLS, Docker, etc... Sou um grande entusiasta da cultura DevOps e, apesar deste assunto estar fora do escopo do projeto, implementei diversas soluções aqui. Me capacitei para atuar em muitas frentes na área de TI, seja ela Backend, Frontend ou DevOps.
 
-Obrigado pela oportunidade!
+**Obrigado pela oportunidade!**
