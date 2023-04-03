@@ -45,7 +45,11 @@ Você perceberá a seguinte tela ao acessar o Swagger a partir do NGINX:
 
 ![image](https://user-images.githubusercontent.com/80921933/229427174-fe2e344b-5835-4129-99cb-450834c683a8.png)
 
-Isso é devido a uma configuração necessária para acessar o Swagger via HTTPS. Como estou nas horas finais do teste, não procurei a fundo sobre como resolver. Sendo assim, você também pode acessar o Swagger sem HTTPS diretamente pelo DNS do servidor backend: http://backend.wipro.alexthedeveloper.com.br/swagger
+Isso acontece porque o Swagger exige configurações adicionais para funcionar via HTTPS (link para referência: https://stackoverflow.com/questions/71857622/java-spring-boot-with-swagger-failed-to-load-remote-configuration).
+
+Eu estava um pouco com pressa, então não procurei a fundo sobre como resolver isso.
+
+Alternativamente, você pode acessar o Swagger **sem HTTPS** diretamente pelo DNS do servidor backend: http://backend.wipro.alexthedeveloper.com.br/swagger
 
 # Enviando uma requisição para a API
 
