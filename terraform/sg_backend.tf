@@ -11,8 +11,15 @@ resource "aws_security_group" "SG_Backend" {
   }
 
   ingress {
-    from_port   = 8181
-    to_port     = 8181
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+    ingress {
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
