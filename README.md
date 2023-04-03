@@ -13,6 +13,8 @@
 - Terraform
 - Jenkins 
 - Docker
+- Shell Script
+- SSH
 - AWS EC2
 - AWS Route 53
 
@@ -382,3 +384,10 @@ cat /tmp/jenkins_home/secrets/initialAdminPassword >> /tmp/JENKINS_PASSWORD
 ```
 
 Nesse âmbito, possuo um projeto para subir um cluster K8s em instâncias EC2 com shell-script e Terraform. Está fora do escopo do teste técnico, mas gostaria de compartilhá-lo com vocês: https://github.com/azl6/k8s-cluster-creation
+
+# Extras
+
+- Fazer um frontend em React estava em meus planos, entretanto, tive alguns problemas pessoais, e o tempo que pude dedicar ao projeto não me permitiu fazê-lo;
+- Usar o ModelMapper foi somente **uma das inúmeras opções**. Talvez pareça que a sua utilização seja um pouco não-usual, mas eu gosto bastante da ferramenta. Caso fosse opção da liderança, nada me impediria de implementar essa solução de outra forma. Mas eu acho os Converters do ModelMapper extremamente poderosos e por isso optei por utilizá-los;
+
+Obrigado pela oportunidade!
