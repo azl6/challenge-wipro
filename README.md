@@ -21,9 +21,36 @@ Secundárias:
 - AWS EC2
 - AWS Route 53
 
-# Documentação Swagger
+# Acessando o projeto
 
-O projeto encontra-se devidamente documentado em http://proxy.wipro.alexthedeveloper.com.br/swagger.
+Todo a infraestrutura do projeto foi deployada via Terraform. Sendo assim, o projeto pode ser acessado a partir dos seguintes links:
+
+- Servidor NGINX de proxy-reverso **(HTTPS)**: https://proxy.wipro.alexthedeveloper.com.br
+- Servidor Jenkins para CI/CD: http://jenkins.wipro.alexthedeveloper.com.br:8080
+- Servidor host da API **(SEM HTTPS)**: http://backend.wipro.alexthedeveloper.com.br
+
+Note que o NGINX foi implementado justamente para servir como um proxy-reverso da aplicação, sendo assim, recomendo o acesso aos endpoints pelo DNS do NGINX:
+
+- Endpoint **/v1/consulta-endereco**: https://proxy.wipro.alexthedeveloper.com.br/v1/consulta-endereco
+- Endpoint **/swagger**: https://proxy.wipro.alexthedeveloper.com.br/swagger **(LEIA ABAIXO!)**
+
+Você perceberá a seguinte tela ao acessar o Swagger a partir do NGINX:
+
+![image](https://user-images.githubusercontent.com/80921933/229427174-fe2e344b-5835-4129-99cb-450834c683a8.png)
+
+Isso é devido a uma configuração necessária para acessar o Swagger via HTTPS. Como estou nas horas finais do teste, não procurei a fundo sobre como resolver. Sendo assim, você também pode acessar o Swagger sem HTTPS diretamente pelo DNS do servidor backend: http://backend.wipro.alexthedeveloper.com.br/swagger
+
+# Enviando uma requisição para a API
+
+Experimente enviar um POST request com o seguinte Request Body para o endereço **proxy.wipro.alexthedeveloper.com.br/v1/consulta-endereco**:
+
+```json
+{
+  "numeroCep": "01001000"
+}
+```
+
+O endereço acima possui um certificado SSL instalado. Existe também uma versão HTTP da API, hospedada em **backend.wipro.alexthedeveloper.com.br/v1/consulta-endereco**. Basta enviar o mesmo Request-Body para lá.
 
 # Testes 
 
@@ -151,18 +178,66 @@ Além disso, faz-se importante evidenciar a utilização do **Regex** para a val
 private String numeroCep;
 ```
 
-# Deploy da infraestrutura
+# Configuração do NGINX como proxy-reverso
+
+Optei por usar o NGINX como proxy-reverso da aplicação. Gerei um certificado SSL via certbot para o DNS **proxy.wipro.alexthedeveloper.com.br** e implementei-o nas configurações do NGINX:
+
+```nginx
+server {
+    listen 443 ssl;
+    server_name proxy.wipro.alexthedeveloper.com.br;
+    ssl_certificate /etc/letsencrypt/live/proxy.wipro.alexthedeveloper.com.br/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/proxy.wipro.alexthedeveloper.com.br/privkey.pem;
+
+    location /v1/consulta-endereco {
+        proxy_pass http://backend.wipro.alexthedeveloper.com.br/v1/consulta-endereco;
+        proxy_set_header Host backend.wipro.alexthedeveloper.com.br;
+    }
+
+    location /swagger {
+        proxy_set_header        X-Forwarded-Proto $scheme;
+        proxy_pass http://backend.wipro.alexthedeveloper.com.br/swagger;
+        proxy_set_header Host backend.wipro.alexthedeveloper.com.br;
+    }
+
+    location /swagger-ui/index.html {
+        proxy_set_header        X-Forwarded-Proto $scheme;
+        proxy_pass http://backend.wipro.alexthedeveloper.com.br/swagger-ui/index.html;
+        proxy_set_header Host backend.wipro.alexthedeveloper.com.br;
+    }
+
+}
+
+```
+
+Ao acessar o DNS **proxy.wipro.alexthedeveloper.com.br**, você perceberá que o browser confia no certificado emitido, já que ele é assinado por um root CA:
+
+![image](https://user-images.githubusercontent.com/80921933/229428426-291262e3-e816-4b8e-b5c1-b799919f17ec.png)
+
+A idéia do NGINX é a de servir como um intermediário entre o cliente e o servidor. Nesse caso, usei-o especificamente para a implementação de um certificado SSL:
+
+![image](https://user-images.githubusercontent.com/80921933/229428579-1ae12569-0815-4aeb-9ed4-a370a3863e09.png)
+
+Você poderá enviar um POST request normalmente para o proxy-reverso, seguindo o seguinte Request Body:
+
+```json
+{
+  "numeroCep": "01001000"
+}
+```
+
+# Deploy da infraestrutura do projeto via Terraform
 
 Dentro da pasta **terraform**, encontram-se arquivos usados para o deploy da infraestrutura do projeto.
 
 Dentre os recursos, estão: 
 
-- 1 servidor na AWS, do tamanho t2.micro, para servir como **host do Jenkins/NGINX**.
-- 1 servidor na AWS, do tamanho t2.micro, para servir como **host da API em Spring**.
-- 1 hosted-zone com o domínio de `alexthedeveloper.com.br`.
-- 1 DNS record, `proxy.wipro.alexthedeveloper.com.br`, do tipo A, apontando para o IPv4 público do servidor Jenkins/NGINX.
-- 1 DNS record, `backend.wipro.alexthedeveloper.com.br`, do tipo A, apontando para o IPv4 público do servidor da API em Spring.
-- 1 SSH key-pair, para que eu possa logar nos servidores via SSH (e também para uso do Jenkins).
+- 3 servidores na AWS, hosteando o Jenkins, NGINX e a API feita em Spring Boot;
+- 1 Hosted-Zone: **alexthedeveloper.com.br**
+- 3 DNS records: **proxy.wipro.alexthedeveloper.com.br**, **jenkins.wipro.alexthedeveloper.com.br** e **backend.wipro.alexthedeveloper.com.br**, que representam o NGINX, Jenkins e o backend, respectivamente;
+- 3 security-groups para os servidores;
+- SSH key-pair para acessar os servidores via SSH;
+- Outras coisas menores, como outputs do Terraform, provider, etc...
 
 # CI/CD
 
@@ -210,7 +285,7 @@ pipeline {
                 sh """
                     echo 'Pushing...'
                     docker login -u="$DOCKER_USR" -p="$DOCKER_PASSWD"
-                    docker push -t azold6/wipro-backend:$BUILD_NUMBER . 
+                    docker push azold6/wipro-backend:$BUILD_NUMBER 
                 """ 
             }
         }
@@ -218,8 +293,8 @@ pipeline {
         stage('Deploy') { 
             steps {
                 sh """
-                    ssh ec2-user@backend.wipro.alexthedeveloper.com.br "docker stop wipro-backend"
-                    ssh ec2-user@backend.wipro.alexthedeveloper.com.br "docker run -p 8181:8181 -d --name wipro-backend --rm azold6/wipro-backend:$BUILD_NUMBER"
+                    ssh -o StrictHostKeyChecking=no ec2-user@backend.wipro.alexthedeveloper.com.br "docker stop wipro-backend"
+                    ssh -o StrictHostKeyChecking=no ec2-user@backend.wipro.alexthedeveloper.com.br "docker run -p 80:80 -d --name wipro-backend --rm azold6/wipro-backend:$BUILD_NUMBER"
                 """                
             }
         }
@@ -231,4 +306,25 @@ Dentro do Jenkins, criei um projeto de **Pipeline** que usa Webhooks como trigge
 
 ![image](https://user-images.githubusercontent.com/80921933/229385388-e344845c-899b-48ee-baca-f02bb6543ea4.png)
 
-Assim que eu fizer qualquer push para o repositório, os Webhooks enviarão um request para o servidor que hospeda o Jenkins, iniciando o processo de entrega contínua, que testará, buildará e pushará a nova imagem Docker gerada para o Dockerhub, para depois deployar a nova versão da aplicação no servidor da API.
+Assim que eu fizer qualquer push para o repositório, os Webhooks enviarão um request para o servidor que hospeda o Jenkins, iniciando o processo de entrega contínua.
+
+A pipeline se encarrega de testar, buildar e deployar a aplicação, utilizando-se do seguinte Dockerfile:
+
+```dockerfile
+FROM maven:3.8.6
+
+WORKDIR /app
+
+COPY . /app
+
+CMD java -jar target/API-Wipro-0.0.1-SNAPSHOT.jar
+```
+
+# Shell Scripting
+
+Usei uma série de scripts para o configuration-management do projeto. Alternativamente pode-se utilizar o Ansible, mas para fins de simplificação, optei pelo shell-script mesmo.
+
+![image](https://user-images.githubusercontent.com/80921933/229431433-6f66b7ae-5b6c-4f69-bd8d-d1d1b2c87c7d.png)
+
+Possuo um projeto com a configuração bem mais extensa, para subir um cluster Kubernetes via Shell-Script/Terraform em instâncias EC2 t2.micro com Weave-net instalado e com os joins já realizados nos nodes. Caso tenham interesse, segue o link: https://github.com/azl6/k8s-cluster-creation
+
