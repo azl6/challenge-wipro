@@ -23,7 +23,7 @@ Secundárias:
 
 # Documentação Swagger
 
-O projeto encontra-se devidamente documentado em http://backend.wipro.alexthedeveloper.com.br/swagger.
+O projeto encontra-se devidamente documentado em http://proxy.wipro.alexthedeveloper.com.br/swagger.
 
 # Testes 
 
@@ -109,10 +109,46 @@ protected Double convert(String estado) {
 
 Por fim, bastou adicionar o **Converter** nas regras de conversão do ModelMapper:
 
-**Lê-se:** Usando o `FreteConverter.converter()`, extraia o valor do campo **uf** e retorne-me o frete correspondente a ela.
-
 ```java
 typeMap.addMappings(mapper -> mapper.using(FreteConverter.converter()).map(EnderecoResponseViaCep::getUf, EnderecoResponse::setFrete));
+```
+
+**Lê-se:** Usando o `FreteConverter.converter()`, extraia o valor do campo **uf** e retorne-me o frete correspondente a ela.
+
+# Mensagens de erro personalizadas
+
+Um erro será retornado majoritariamente nos seguintes casos:
+
+- CEP informado é nulo
+- CEP informado é vazio
+- CEP informado está fora do padrão XXXXXXXX ou XXXXX-XXX
+- CEP informado não existe
+
+Todos esses casos foram devidamente tratados com validações:
+
+**CEP informado é nulo**
+
+![image](https://user-images.githubusercontent.com/80921933/229386270-92dc3627-f7a5-4908-86e5-e8fde0ec7a56.png)
+
+**CEP informado é vazio**
+
+![image](https://user-images.githubusercontent.com/80921933/229386292-d3b1c1d5-8f7b-4bc3-bc28-cec344884fc7.png)
+
+**CEP informado está fora do padrão XXXXXXXX ou XXXXX-XXX**
+
+![image](https://user-images.githubusercontent.com/80921933/229386328-ee43a752-4691-40a1-b1ec-8df8255838b4.png)
+
+**CEP informado não existe**
+
+![image](https://user-images.githubusercontent.com/80921933/229386352-33054fc8-fbda-447d-a2e7-b5b37f102ec1.png)
+
+Os testes também encarregaram-se de testar os cenários acima evidenciados.
+
+Além disso, faz-se importante evidenciar a utilização do **Regex** para a validação de formato do CEP:
+
+```java
+@Pattern(regexp = "^([0-9]{5}-[0-9]{3}|[0-9]{8})$", message = "O formato do CEP deve ser XXXXX-XXX ou XXXXXXXX.")
+private String numeroCep;
 ```
 
 # Deploy da infraestrutura
