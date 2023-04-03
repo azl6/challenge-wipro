@@ -266,6 +266,8 @@ Dentre os recursos, estão:
 - SSH key-pair para acessar os servidores via SSH;
 - Outras coisas menores, como outputs do Terraform, provider, etc...
 
+Por favor, **não deixe de acessar a pasta terraform**! Tem **muita** coisa lá dentro.
+
 # CI/CD
 
 Um contêiner do Jenkins foi deployado via IaC com o Terraform. Utilizei-o para a construção da seguinte pipeline de CI/CD:
