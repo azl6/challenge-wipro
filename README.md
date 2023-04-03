@@ -2,17 +2,12 @@
 
 # Tecnologias usadas:
 
-Principais:
-
 - Java
 - Spring Boot
 - JUnit 5
 - Cucumber/Gherkin
 - TestRestTemplate
 - Maven
-
-Secundárias:
-
 - ModelMapper
 - NGINX
 - Terraform
