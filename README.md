@@ -253,7 +253,7 @@ A idéia do NGINX é a de servir como um intermediário entre o cliente e o serv
 
 ![image](https://user-images.githubusercontent.com/80921933/229428579-1ae12569-0815-4aeb-9ed4-a370a3863e09.png)
 
-Você poderá enviar um POST request normalmente para o proxy-reverso, seguindo o seguinte Request Body:
+Você poderá enviar um POST request normalmente para o proxy-reverso (no endpoint **/v1/consulta-endereco**), seguindo o seguinte Request Body:
 
 ```json
 {
