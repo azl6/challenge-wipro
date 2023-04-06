@@ -33,7 +33,7 @@
 Todo a infraestrutura do projeto foi deployada via Terraform. Sendo assim, o projeto pode ser acessado a partir dos seguintes links:
 
 - Servidor NGINX de proxy-reverso **(HTTPS)**: https://proxy.wipro.alexthedeveloper.com.br
-- Servidor Jenkins para CI/CD **(SEM HTTPS)**: http://jenkins.wipro.alexthedeveloper.com.br:8080
+- Servidor Jenkins para CI/CD **ESSE SERVIDOR FOI PARADO EM 06/04/2022, JÁ QUE ADICIONAVA GASTOS PELA SUA NECESSIDADE DE SER UM t2.small, QUE NÃO É COBERTO PELO FREE-TIER**: http://jenkins.wipro.alexthedeveloper.com.br:8080
 - Servidor host da API **(SEM HTTPS)**: http://backend.wipro.alexthedeveloper.com.br
 
 Note que o NGINX foi implementado justamente para servir como um proxy-reverso da aplicação, sendo assim, recomendo o acesso aos endpoints pelo DNS do NGINX:
